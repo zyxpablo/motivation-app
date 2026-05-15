@@ -1,10 +1,34 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Icon from './Icon'
+
+const DEFAULT_HABITS = [
+  { id: 1, title: 'Boire 2L d\'eau', category: 'health', frequency: 'daily', streak: 0, longestStreak: 0, completedToday: false, history: [], createdAt: new Date().toISOString() },
+  { id: 2, title: 'Faire 30 min de sport', category: 'health', frequency: 'daily', streak: 0, longestStreak: 0, completedToday: false, history: [], createdAt: new Date().toISOString() },
+  { id: 3, title: 'Dormir 8h', category: 'health', frequency: 'daily', streak: 0, longestStreak: 0, completedToday: false, history: [], createdAt: new Date().toISOString() },
+  { id: 4, title: 'Méditer 10 minutes', category: 'mindfulness', frequency: 'daily', streak: 0, longestStreak: 0, completedToday: false, history: [], createdAt: new Date().toISOString() },
+  { id: 5, title: 'Lire 20 minutes', category: 'learning', frequency: 'daily', streak: 0, longestStreak: 0, completedToday: false, history: [], createdAt: new Date().toISOString() },
+  { id: 6, title: 'Apprendre quelque chose de nouveau', category: 'learning', frequency: 'daily', streak: 0, longestStreak: 0, completedToday: false, history: [], createdAt: new Date().toISOString() },
+  { id: 7, title: 'Travailler sans distractions (1h)', category: 'productivity', frequency: 'daily', streak: 0, longestStreak: 0, completedToday: false, history: [], createdAt: new Date().toISOString() },
+  { id: 8, title: 'Planifier le jour suivant', category: 'productivity', frequency: 'daily', streak: 0, longestStreak: 0, completedToday: false, history: [], createdAt: new Date().toISOString() },
+  { id: 9, title: 'Faire des étirements', category: 'health', frequency: 'daily', streak: 0, longestStreak: 0, completedToday: false, history: [], createdAt: new Date().toISOString() },
+  { id: 10, title: 'Prendre du temps pour soi', category: 'mindfulness', frequency: 'daily', streak: 0, longestStreak: 0, completedToday: false, history: [], createdAt: new Date().toISOString() },
+  { id: 11, title: 'Appeler un ami/proche', category: 'social', frequency: 'daily', streak: 0, longestStreak: 0, completedToday: false, history: [], createdAt: new Date().toISOString() },
+  { id: 12, title: 'Écrire 3 gratitudes', category: 'mindfulness', frequency: 'daily', streak: 0, longestStreak: 0, completedToday: false, history: [], createdAt: new Date().toISOString() },
+  { id: 13, title: 'Rangement/Nettoyage', category: 'productivity', frequency: 'daily', streak: 0, longestStreak: 0, completedToday: false, history: [], createdAt: new Date().toISOString() },
+  { id: 14, title: 'Prendre l\'air (15 min)', category: 'health', frequency: 'daily', streak: 0, longestStreak: 0, completedToday: false, history: [], createdAt: new Date().toISOString() },
+  { id: 15, title: 'Vérifier ses objectifs', category: 'productivity', frequency: 'daily', streak: 0, longestStreak: 0, completedToday: false, history: [], createdAt: new Date().toISOString() },
+]
 
 export default function HabitTracker({ habits, onUpdate }) {
   const [newHabit, setNewHabit] = useState('')
   const [frequency, setFrequency] = useState('daily')
   const [category, setCategory] = useState('health')
+
+  useEffect(() => {
+    if (habits.length === 0) {
+      onUpdate(DEFAULT_HABITS)
+    }
+  }, [])
 
   const categories = [
     { id: 'health', label: 'Santé' },
