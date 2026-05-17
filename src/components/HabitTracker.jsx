@@ -30,6 +30,18 @@ export default function HabitTracker({ habits, onUpdate }) {
     }
   }, [])
 
+  useEffect(() => {
+    const today = new Date().toISOString().split('T')[0]
+    const lastResetDate = localStorage.getItem('habits-reset-date')
+
+    // Si le jour a changé, réinitialiser completedToday pour toutes les habitudes
+    if (lastResetDate !== today) {
+      const resetHabits = habits.map(h => ({ ...h, completedToday: false }))
+      onUpdate(resetHabits)
+      localStorage.setItem('habits-reset-date', today)
+    }
+  }, [habits])
+
   const categories = [
     { id: 'health', label: 'Santé' },
     { id: 'productivity', label: 'Productivité' },
