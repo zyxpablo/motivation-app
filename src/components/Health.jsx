@@ -1,8 +1,21 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Icon from './Icon'
 
 export default function Health({ health, onUpdate }) {
   const water = health?.water || 0
+
+  // Reset water and mood at midnight
+  useEffect(() => {
+    const today = new Date().toISOString().split('T')[0]
+    const lastHealthResetDate = localStorage.getItem('health-reset-date')
+
+    if (lastHealthResetDate !== today) {
+      // Reset water to 0
+      const updatedHealth = { ...health, water: 0 }
+      onUpdate(updatedHealth)
+      localStorage.setItem('health-reset-date', today)
+    }
+  }, [health])
   const workouts = health?.workouts || []
   const sleep = health?.sleep || []
   const weight = health?.weight || []
