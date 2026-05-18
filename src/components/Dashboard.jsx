@@ -54,11 +54,14 @@ export default function Dashboard({ data, setActiveView }) {
 
   return (
     <div className="space-y-6">
-      <header className="flex items-end justify-between border-b border-neutral-200 dark:border-neutral-900 pb-6">
-        <div>
-          <p className="text-xs text-neutral-500 dark:text-neutral-500 mb-1 capitalize tracking-wide">{today}</p>
-          <h1 className="text-3xl font-semibold tracking-tight">{greetingByHour()}.</h1>
-          <p className="text-sm text-neutral-600 dark:text-neutral-400 mt-1.5">Aperçu de votre journée et de votre progression globale.</p>
+      <header className="relative border-b border-white/10 dark:border-white/5 pb-6 group">
+        <div className="absolute inset-0 bg-gradient-to-r from-indigo-500/5 to-purple-500/5 rounded-xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+        <div className="relative">
+          <p className="text-xs text-indigo-400/70 mb-2 capitalize tracking-widest font-bold">{today}</p>
+          <h1 className="text-4xl md:text-5xl font-black tracking-tight bg-gradient-to-r from-white via-neutral-200 to-neutral-400 dark:from-white dark:via-neutral-100 dark:to-neutral-300 bg-clip-text text-transparent">
+            {greetingByHour()}.
+          </h1>
+          <p className="text-sm text-neutral-400 mt-2 group-hover:text-neutral-300 transition-colors">Aperçu de votre journée et de votre progression globale.</p>
         </div>
       </header>
 
@@ -199,16 +202,16 @@ export default function Dashboard({ data, setActiveView }) {
 
 function StatCard({ label, value, unit, sub, trend, trendValue }) {
   return (
-    <div className="rounded-lg border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-950 p-4">
-      <p className="text-[11px] text-neutral-500 uppercase tracking-wider mb-3">{label}</p>
+    <div className="group rounded-xl border border-white/10 dark:border-white/5 bg-gradient-to-br from-white/5 to-white/2 dark:from-white/5 dark:to-white/2 backdrop-blur-md p-4 hover:border-indigo-500/20 hover:bg-gradient-to-br hover:from-indigo-500/5 hover:to-purple-500/5 transition-all duration-300">
+      <p className="text-[11px] text-indigo-400/70 uppercase tracking-wider mb-3 font-bold">{label}</p>
       <div className="flex items-baseline gap-2 mb-2">
-        <span className="text-2xl font-semibold tracking-tight">{value}</span>
-        {unit && <span className="text-xs text-neutral-500">{unit}</span>}
+        <span className="text-3xl font-bold tracking-tight text-white group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-indigo-400 group-hover:to-purple-400 transition-all">{value}</span>
+        {unit && <span className="text-xs text-neutral-400 group-hover:text-neutral-300 transition">{unit}</span>}
       </div>
       <div className="flex items-center justify-between">
-        <p className="text-[11px] text-neutral-500">{sub}</p>
+        <p className="text-[11px] text-neutral-400 group-hover:text-neutral-300 transition">{sub}</p>
         {trend && trendValue && (
-          <span className={`flex items-center gap-1 text-[10px] font-medium ${trend === 'up' ? 'text-emerald-600 dark:text-emerald-500' : 'text-red-600 dark:text-red-500'}`}>
+          <span className={`flex items-center gap-1 text-[10px] font-bold ${trend === 'up' ? 'text-emerald-400' : 'text-red-400'}`}>
             <Icon name={trend === 'up' ? 'trending' : 'trending_down'} size={11} />
             {trendValue}
           </span>
@@ -220,12 +223,12 @@ function StatCard({ label, value, unit, sub, trend, trendValue }) {
 
 function Card({ title, action, onAction, children, className = '' }) {
   return (
-    <div className={`rounded-lg border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-950 p-5 ${className}`}>
+    <div className={`group rounded-xl border border-white/10 dark:border-white/5 bg-gradient-to-br from-white/5 to-white/2 dark:from-white/5 dark:to-white/2 backdrop-blur-lg p-5 hover:border-indigo-500/20 hover:bg-gradient-to-br hover:from-indigo-500/5 hover:to-purple-500/5 transition-all duration-300 ${className}`}>
       <div className="flex items-center justify-between mb-4">
-        <h3 className="text-sm font-semibold">{title}</h3>
+        <h3 className="text-sm font-bold text-white">{title}</h3>
         {action && (
-          <button onClick={onAction} className="flex items-center gap-1 text-xs text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100 transition">
-            {action} <Icon name="arrow_right" size={12} />
+          <button onClick={onAction} className="flex items-center gap-1 text-xs text-neutral-400 hover:text-indigo-400 transition-all group/btn">
+            {action} <Icon name="arrow_right" size={12} className="group-hover/btn:translate-x-0.5 transition-transform" />
           </button>
         )}
       </div>
@@ -237,12 +240,12 @@ function Card({ title, action, onAction, children, className = '' }) {
 function ProgressTile({ label, value, sub }) {
   return (
     <div>
-      <div className="flex items-baseline justify-between mb-1">
-        <span className="text-xs text-neutral-600 dark:text-neutral-400">{label}</span>
-        <span className="text-base font-semibold">{value}%</span>
+      <div className="flex items-baseline justify-between mb-2">
+        <span className="text-xs text-neutral-400 font-medium">{label}</span>
+        <span className="text-base font-bold bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent">{value}%</span>
       </div>
-      <div className="w-full bg-neutral-100 dark:bg-neutral-900 rounded-full h-1.5 overflow-hidden mb-1">
-        <div className="bg-neutral-900 dark:bg-neutral-100 h-full transition-all duration-500" style={{ width: `${value}%` }} />
+      <div className="w-full bg-white/5 rounded-full h-2 overflow-hidden mb-2">
+        <div className="bg-gradient-to-r from-indigo-400 to-purple-400 h-full transition-all duration-500" style={{ width: `${value}%` }} />
       </div>
       <p className="text-[10px] text-neutral-500">{sub}</p>
     </div>
@@ -251,9 +254,9 @@ function ProgressTile({ label, value, sub }) {
 
 function Metric({ label, value, sub }) {
   return (
-    <div>
-      <p className="text-[10px] uppercase tracking-wider text-neutral-500 mb-1">{label}</p>
-      <p className="text-lg font-semibold">{value}<span className="text-xs text-neutral-500 font-normal">{sub}</span></p>
+    <div className="group">
+      <p className="text-[10px] uppercase tracking-widest text-indigo-400/60 mb-2 font-bold group-hover:text-indigo-400 transition-colors">{label}</p>
+      <p className="text-lg font-bold text-white">{value}<span className="text-xs text-neutral-400 font-normal">{sub}</span></p>
     </div>
   )
 }
@@ -262,15 +265,17 @@ function SummaryCard({ title, icon, value, sub, metaLabel, onClick, tone }) {
   return (
     <button
       onClick={onClick}
-      className="text-left rounded-lg border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-950 p-4 hover:border-neutral-300 dark:hover:border-neutral-700 transition group"
+      className="text-left group rounded-xl border border-white/10 dark:border-white/5 bg-gradient-to-br from-white/5 to-white/2 dark:from-white/5 dark:to-white/2 backdrop-blur-md p-4 hover:border-indigo-500/30 hover:bg-gradient-to-br hover:from-indigo-500/10 hover:to-purple-500/10 transition-all duration-300 active:scale-95"
     >
       <div className="flex items-center justify-between mb-3">
-        <span className="text-[11px] uppercase tracking-wider text-neutral-500">{title}</span>
-        <Icon name={icon} size={14} className="text-neutral-400 group-hover:text-neutral-700 dark:group-hover:text-neutral-300 transition" />
+        <span className="text-[11px] uppercase tracking-wider text-indigo-400/70 font-bold group-hover:text-indigo-400 transition-colors">{title}</span>
+        <Icon name={icon} size={16} className="text-neutral-400 group-hover:text-indigo-400 group-hover:scale-110 transition-all" />
       </div>
-      <p className={`text-2xl font-semibold mb-1 ${tone === 'negative' ? 'text-red-600 dark:text-red-500' : tone === 'positive' ? '' : ''}`}>{value}</p>
-      <p className="text-[11px] text-neutral-500 mb-1">{sub}</p>
-      <p className="text-[10px] text-neutral-400 dark:text-neutral-600">{metaLabel}</p>
+      <p className={`text-2xl font-bold mb-1 ${
+        tone === 'negative' ? 'text-red-400' : tone === 'positive' ? 'text-emerald-400' : 'text-white'
+      }`}>{value}</p>
+      <p className="text-[11px] text-neutral-400 group-hover:text-neutral-300 transition mb-1">{sub}</p>
+      <p className="text-[10px] text-neutral-500 group-hover:text-neutral-400 transition">{metaLabel}</p>
     </button>
   )
 }
